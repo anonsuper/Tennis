@@ -9,7 +9,6 @@ import com.example.tennis.event.*
 
 class TennisGame private constructor(private val gameScore : GameScore = GameScore()){
 
-
     init {
         setDomain()
     }
