@@ -1,7 +1,8 @@
 package com.example.tennis.viewmodel
 
+import com.example.tennis.presenter.TennisPresenter.Companion.ZERO_DISPLAY
 import com.example.tennis.unittests.EventUnitTest
-import org.junit.Assert.assertEquals
+import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 

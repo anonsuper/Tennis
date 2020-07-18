@@ -3,8 +3,7 @@ package com.example.tennis.viewmodel
 import androidx.annotation.VisibleForTesting
 import com.example.tennis.event.*
 import com.example.tennis.library.EventViewModel
-
-const val ZERO_DISPLAY = "0"
+import com.example.tennis.presenter.TennisPresenter.Companion.ZERO_DISPLAY
 
 class TennisViewModel : EventViewModel() {
     var playerOneScore = ZERO_DISPLAY
