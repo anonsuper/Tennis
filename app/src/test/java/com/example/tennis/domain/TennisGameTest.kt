@@ -3,9 +3,10 @@ package com.example.tennis.domain
 import com.example.tennis.domain.entities.GameScore
 import com.example.tennis.domain.entities.Player
 import com.example.tennis.domain.entities.Scores.*
+import org.junit.Test
+
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Test
 
 class TennisGameTest {
 
@@ -13,29 +14,33 @@ class TennisGameTest {
 
     @Before
     fun setup(){
-        tennisGame = TennisGame()
+        tennisGame = TennisGame.create()
     }
 
+    //Usually only public methods are tested
+    //However the Domain, Presenter and ViewModel don't need public methods as they don't have callable methods
+    //To still observe testability we make the exception by testing every method that publishes it's result to the event bus
+
     @Test
-    fun `Player two's score should increase correctly each time they score while their opponent does not`(){
-        assertEquals(score_0_15, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_0_30, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_0_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_lose_win, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
+    fun `Player two's score should increase correctly each time they score while their opponent does not`() {
+        assertEquals(score_0_15, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_0_30, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_0_40, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_lose_win, tennisGame.updatePlayerTwoScore())
     }
 
     @Test
     fun `Player one's score should increase correctly each time they score while their opponent is also scoring`() {
-        assertEquals(score_0_15, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_0_30, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_0_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_15_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
-        assertEquals(score_30_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
-        assertEquals(score_40_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
-        assertEquals(score_40_adv, tennisGame.updatePlayerScore(tennisGame.gameScore.playerTwo,tennisGame.gameScore.playerOne))
-        assertEquals(score_40_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
-        assertEquals(score_adv_40, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
-        assertEquals(score_win_lose, tennisGame.updatePlayerScore(tennisGame.gameScore.playerOne,tennisGame.gameScore.playerTwo))
+        assertEquals(score_0_15, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_0_30, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_0_40, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_15_40, tennisGame.updatePlayerOneScore())
+        assertEquals(score_30_40, tennisGame.updatePlayerOneScore())
+        assertEquals(score_40_40, tennisGame.updatePlayerOneScore())
+        assertEquals(score_40_adv, tennisGame.updatePlayerTwoScore())
+        assertEquals(score_40_40, tennisGame.updatePlayerOneScore())
+        assertEquals(score_adv_40, tennisGame.updatePlayerOneScore())
+        assertEquals(score_win_lose, tennisGame.updatePlayerOneScore())
     }
 
     companion object {
